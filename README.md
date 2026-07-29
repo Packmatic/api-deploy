@@ -2,26 +2,16 @@
 
 Compile an OpenAPI spec into an Amazon API Gateway definition and deploy it.
 
-Packmatic fork of [fabfuel/api-deploy](https://github.com/fabfuel/api-deploy). Published
-privately as `packmatic-api-deploy` to the `packmatic` AWS CodeArtifact domain.
+Packmatic fork of [fabfuel/api-deploy](https://github.com/fabfuel/api-deploy). Pushing to
+`develop` publishes `ghcr.io/packmatic/api-deploy:develop`, which `packaging`'s API Gateway
+deploy uses.
 
 ## Install
 
 ```bash
-aws codeartifact login --tool pip \
-  --domain packmatic --domain-owner 038513119918 \
-  --repository packmatic --region eu-central-1
-
-pip install packmatic-api-deploy
-```
-
-For local development, pipx keeps the `api` CLI isolated:
-
-```bash
-pipx uninstall api-deploy            # remove the upstream build first, the `api` binary collides
-pipx install packmatic-api-deploy --pip-args="--index-url $(aws codeartifact get-repository-endpoint \
-  --domain packmatic --domain-owner 038513119918 --repository packmatic \
-  --format pypi --region eu-central-1 --output text)simple/"
+docker run --rm -v "$PWD":/workspace -w /workspace \
+  ghcr.io/packmatic/api-deploy:develop \
+  api compile <config> <source> <target>
 ```
 
 ## Usage
@@ -100,25 +90,8 @@ Keep it in the API-Gateway-only config.
 
 ## Releasing
 
-Releases are published manually by a developer, not by CI. The flow is:
-
-1. open a PR with your change
-2. get it approved and merged into `develop`
-3. from `develop`, publish the package:
-
-```bash
-./scripts/release.sh                 # interactive
-./scripts/release.sh --bump patch    # or non-interactive
-./scripts/release.sh --bump none     # publish the current version as-is
-```
-
-The script runs the unit tests, builds sdist + wheel in a throwaway venv, authenticates
-to CodeArtifact with your own AWS credentials, and uploads. It bumps
-`api_deploy/__init__.py` only — no git tag or commit — so commit that bump yourself
-afterwards.
-
-Then pin the new version where it is consumed, e.g. `packaging`'s
-`.github/workflows/deployment.yml`.
+Merging to `develop` builds and pushes `ghcr.io/packmatic/api-deploy:develop` (and `:latest`).
+Pushing a `x.y.z` tag publishes that tag too. Nothing to run by hand.
 
 ## Development
 
