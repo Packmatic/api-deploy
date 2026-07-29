@@ -14,6 +14,7 @@ class Config(Dict):
                 'response': [],
             },
             'strict': {},
+            'flatten': {},
             'gateway': {},
             'cors': {},
             'static': {
@@ -32,6 +33,10 @@ class Config(Dict):
         default_config['gateway'].setdefault('connection_id', config_file.get('gateway', {}).get('connectionId', ''))
         default_config['gateway'].setdefault('remove_scopes', config_file.get('gateway', {}).get('removeScopes', False))
         default_config['gateway'].setdefault('remove_descriptions', config_file.get('gateway', {}).get('removeDescriptions', False))
+        default_config['gateway'].setdefault('remove_examples', config_file.get('gateway', {}).get('removeExamples', False))
+
+        default_config['flatten'].setdefault('dedup_external_refs',
+                                             config_file.get('flatten', {}).get('dedupExternalRefs', False))
 
         default_config['cors'].setdefault('allow_origin', config_file.get('cors', {}).get('origin', '*'))
 
