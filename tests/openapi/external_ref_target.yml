@@ -83,16 +83,48 @@ paths:
                   statusCode:
                     type: integer
                     example: 401
+                    description: Deprecated HTTP status code
                   message:
                     type: string
                     example: Unauthorized
+                    description: Deprecated human readable error message
                   error:
                     type: string
                     example: Unauthorized
+                    description: Deprecated machine readable error message
                   incident:
                     description: Unique incident identifier
                     type: string
                     example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -112,16 +144,48 @@ paths:
                   statusCode:
                     type: integer
                     example: 403
+                    description: Deprecated HTTP status code
                   message:
                     type: string
                     example: Forbidden resource
+                    description: Deprecated human readable error message
                   error:
                     type: string
                     example: Forbidden
+                    description: Deprecated machine readable error message
                   incident:
                     description: Unique incident identifier
                     type: string
                     example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -141,16 +205,48 @@ paths:
                   statusCode:
                     type: integer
                     example: 500
+                    description: Deprecated HTTP status code
                   message:
                     type: string
                     example: Internal Server Error
+                    description: Deprecated human readable error message
                   error:
                     type: string
                     example: Internal Server Error
+                    description: Deprecated machine readable error message
                   incident:
                     description: Unique incident identifier
                     type: string
                     example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -283,16 +379,48 @@ paths:
                   statusCode:
                     type: integer
                     example: 500
+                    description: Deprecated HTTP status code
                   message:
                     type: string
                     example: Internal Server Error
+                    description: Deprecated human readable error message
                   error:
                     type: string
                     example: Internal Server Error
+                    description: Deprecated machine readable error message
                   incident:
                     description: Unique incident identifier
                     type: string
                     example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -731,15 +859,13 @@ components:
       - modifiedBy
       additionalProperties: false
       properties:
-        additionalField:
-          type: string
         id:
           type: string
-          example: 5d4470a6-121b-40d2-aff9-00f24aa4a110
           readOnly: true
+          example: 5d4470a6-121b-40d2-aff9-00f24aa4a110
         urn:
           type: string
-          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
+          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
           example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         tenant:
           type: string
@@ -756,7 +882,7 @@ components:
           format: date-time
         createdBy:
           type: string
-          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
+          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
           example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         modifiedAt:
           type: string
@@ -764,9 +890,11 @@ components:
           nullable: true
         modifiedBy:
           type: string
-          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
+          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
           example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
           nullable: true
+        additionalField:
+          type: string
     TestTwo:
       type: object
       readOnly: true
@@ -782,11 +910,11 @@ components:
       properties:
         id:
           type: string
-          example: 5d4470a6-121b-40d2-aff9-00f24aa4a110
           readOnly: true
+          example: 5d4470a6-121b-40d2-aff9-00f24aa4a110
         urn:
           type: string
-          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
+          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
           example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         tenant:
           type: string
@@ -803,7 +931,7 @@ components:
           format: date-time
         createdBy:
           type: string
-          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
+          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
           example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         modifiedAt:
           type: string
@@ -811,7 +939,7 @@ components:
           nullable: true
         modifiedBy:
           type: string
-          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
+          pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
           example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
           nullable: true
   securitySchemes:

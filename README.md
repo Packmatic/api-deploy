@@ -128,7 +128,9 @@ pytest
 flake8 api_deploy
 ```
 
-`tests/functional/test_compile.py::test_compile_external_ref` and `::test_compile_one_of`
-fetch live schemas from `api.packmatic.io` and currently fail against the committed
-fixtures, which predate a change to the published `urn.yml` pattern. Pre-existing on
-`develop`; unrelated to the flatten/examples options.
+The functional tests resolve external `$ref`s against the live schemas at
+`api.packmatic.io` / `api-staging.packmatic.io`, which are served from the
+[api-types](https://github.com/Packmatic/api-types) repo. When api-types changes a shared
+schema, `tests/openapi/*_target.yml` goes stale and must be regenerated — api-types 1.11.0
+widened the `urn.yml` pattern to support two ids and added fields to the error responses,
+which is why those fixtures were refreshed.
