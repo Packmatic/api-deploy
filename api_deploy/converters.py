@@ -1,4 +1,7 @@
+import re
 from copy import deepcopy
+
+import yaml
 from mergedeep import merge
 from requests import get, HTTPError
 
@@ -18,7 +21,7 @@ class ProcessManager:
     def default(cls, config: Config):
         default_manager = cls()
         default_manager.register(StaticFileProcessor(config, **config['static']))
-        default_manager.register(FlattenProcessor(config))
+        default_manager.register(FlattenProcessor(config, **config['flatten']))
         default_manager.register(PassthroughProcessor(config, **config['headers']))
         default_manager.register(StrictProcessor(config, **config['strict']))
         default_manager.register(ApiGatewayProcessor(config, **config['gateway']))
@@ -40,11 +43,14 @@ class ProcessManager:
 
 class FlattenProcessor(AbstractProcessor):
 
-    def __init__(self, config: Config, **kwargs) -> None:
+    def __init__(self, config: Config, dedup_external_refs=False, **kwargs) -> None:
         super().__init__(config)
         self.base_url = None
         self.used_refs = set()
         self.external_schemas = {}
+        self.dedup_external_refs = dedup_external_refs
+        self.hoisted_names_by_fingerprint = {}
+        self.schemas_to_register = {}
 
     def process(self, source: Schema) -> Schema:
         target = deepcopy(source)
@@ -63,6 +69,12 @@ class FlattenProcessor(AbstractProcessor):
         self.replace_refs_dict(target['paths'], target)
         self.replace_refs_dict(target['paths'], target)
 
+        # Register hoisted schemas, resolving refs inside them until nothing new is hoisted
+        while self.schemas_to_register:
+            newly_hoisted, self.schemas_to_register = self.schemas_to_register, {}
+            target['components']['schemas'].update(newly_hoisted)
+            self.replace_refs_dict(target['components']['schemas'], target)
+
         try:
             del target['components']['parameters']
         except KeyError:
@@ -78,6 +90,8 @@ class FlattenProcessor(AbstractProcessor):
 
     def replace_refs_dict(self, node, schema, replace_ref=True, enforce_replace=False):
         if self.is_ref(node) and (replace_ref or enforce_replace or self.is_external_ref(node)):
+            if self.dedup_external_refs and self.is_external_ref(node) and not enforce_replace:
+                return self.hoist_external_ref(node, schema, is_schema_position=not replace_ref)
             return self.lookup_ref(node, schema)
         elif self.is_ref(node):
             self.used_refs.add(self.get_ref_model_name(node['$ref']))
@@ -105,6 +119,65 @@ class FlattenProcessor(AbstractProcessor):
             if model in used_refs:
                 used_schemas[model] = schemas[model]
         return used_schemas
+
+    def hoist_external_ref(self, ref: dict, schema: Schema, is_schema_position: bool):
+        """Resolve an external $ref once into components/schemas and reference it from every use site.
+
+        API Gateway resolves internal $refs, so this collapses thousands of duplicated inline copies.
+        """
+        ref_url = ref['$ref']
+        resolved = deepcopy(self.lookup_ref(ref, schema))
+
+        if not isinstance(resolved, dict):
+            return resolved
+
+        if is_schema_position:
+            return self.register_hoisted_schema(ref_url, resolved, schema)
+
+        # Response and request body objects: hoist only the payload schema, keep the small wrapper inline
+        if isinstance(resolved.get('content'), dict):
+            for media_type, media in resolved['content'].items():
+                if isinstance(media, dict) and isinstance(media.get('schema'), dict):
+                    media['schema'] = self.register_hoisted_schema(
+                        f'{ref_url}#{media_type}', media['schema'], schema
+                    )
+
+        return resolved
+
+    def register_hoisted_schema(self, ref_url: str, body: dict, schema: Schema):
+        # Identical schemas reached through differently spelled refs must collapse into one component
+        fingerprint = yaml.dump(body, sort_keys=True)
+        component_name = self.hoisted_names_by_fingerprint.get(fingerprint)
+
+        if not component_name:
+            component_name = self.build_component_name(ref_url, schema)
+            self.hoisted_names_by_fingerprint[fingerprint] = component_name
+            self.schemas_to_register[component_name] = body
+
+        self.used_refs.add(component_name)
+
+        return {'$ref': f'#/components/schemas/{component_name}'}
+
+    def build_component_name(self, ref_url: str, schema: Schema):
+        directory, _, file_name = ref_url.split('#')[0].rpartition('/')
+        base_name = self.to_pascal_case(re.sub(r'\.(ya?ml|json)$', '', file_name))
+
+        # API Gateway model names must be alphanumeric and cannot start with a digit
+        if not base_name[:1].isalpha():
+            base_name = self.to_pascal_case(directory.rpartition('/')[2].rstrip('s')) + base_name
+
+        taken = set(schema.get('components', {}).get('schemas', {})) | set(self.schemas_to_register)
+        component_name = base_name
+        suffix = 2
+        while component_name in taken:
+            component_name = f'{base_name}{suffix}'
+            suffix += 1
+
+        return component_name
+
+    @staticmethod
+    def to_pascal_case(value: str):
+        return ''.join(part[:1].upper() + part[1:] for part in re.split(r'[^A-Za-z0-9]+', value) if part)
 
     @staticmethod
     def get_ref_model_name(ref):
@@ -203,12 +276,14 @@ class FlattenProcessor(AbstractProcessor):
 
 
 class ApiGatewayProcessor(AbstractProcessor):
-    def __init__(self, config: Config, integration_host, connection_id, remove_scopes, remove_descriptions, **kwargs) -> None:
+    def __init__(self, config: Config, integration_host, connection_id, remove_scopes, remove_descriptions,
+                 remove_examples=False, **kwargs) -> None:
         super().__init__(config)
         self.integration_host = integration_host
         self.connection_id = connection_id
         self.remove_scopes = remove_scopes
         self.remove_descriptions = remove_descriptions
+        self.remove_examples = remove_examples
 
     def process(self, schema: Schema) -> Schema:
         for path in schema['paths']:
@@ -237,6 +312,11 @@ class ApiGatewayProcessor(AbstractProcessor):
             for model_name in schema['components'].get('schemas', {}):
                 self._remove_descriptions(schema['components']['schemas'][model_name])
 
+        # Examples are documentation only, API Gateway ignores them
+        if self.remove_examples:
+            self._remove_examples(schema['paths'])
+            self._remove_examples(schema['components'])
+
         # Replace all authorizers with API key type
         for authorizer in schema['components'].get('securitySchemes', {}):
             scheme = schema['components']['securitySchemes'][authorizer]
@@ -263,6 +343,23 @@ class ApiGatewayProcessor(AbstractProcessor):
                     for property_name in schema['items']['properties']:
                         self._remove_descriptions(schema['items']['properties'][property_name])
 
+
+    def _remove_examples(self, node: object):
+        if isinstance(node, dict):
+            node.pop('example', None)
+            node.pop('examples', None)
+
+            for key, value in node.items():
+                # Never treat a schema property literally named "example" as a keyword
+                if key == 'properties' and isinstance(value, dict):
+                    for property_schema in value.values():
+                        self._remove_examples(property_schema)
+                elif key != 'x-amazon-apigateway-integration':
+                    self._remove_examples(value)
+
+        elif isinstance(node, list):
+            for item in node:
+                self._remove_examples(item)
 
     def _get_response_codes(self, schema, path, method):
         responses = {

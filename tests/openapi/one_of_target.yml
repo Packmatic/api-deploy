@@ -11,8 +11,8 @@ servers:
 tags:
 - name: Message
   description: Message sending
-- name: Static Files
-  description: Static file content
+- description: Static file content
+  name: Static Files
 - name: CORS
   description: CORS configuration endpoints
 paths:
@@ -28,8 +28,8 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/UserCreated'
-                - $ref: '#/components/schemas/ProjectCreated'
+              - $ref: '#/components/schemas/UserCreated'
+              - $ref: '#/components/schemas/ProjectCreated'
               discriminator:
                 propertyName: message
       responses:
@@ -39,102 +39,197 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/UserCreated'
-                  - $ref: '#/components/schemas/ProjectCreated'
-                  - $ref: '#/components/schemas/MessageList'
+                - $ref: '#/components/schemas/UserCreated'
+                - $ref: '#/components/schemas/ProjectCreated'
+                - $ref: '#/components/schemas/MessageList'
           headers:
             Access-Control-Allow-Origin:
               schema:
                 type: string
-                example: 'foo.com'
+                example: foo.com
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                additionalProperties: false
-                properties:
-                  error:
-                    example: Bad Request
-                    type: string
-                  incident:
-                    description: Unique incident identifier
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                    type: string
-                  message:
-                    example: Bad Request
-                    type: string
-                  statusCode:
-                    example: 400
-                    type: integer
+                type: object
                 required:
                 - statusCode
                 - message
-                type: object
+                additionalProperties: false
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                    description: Deprecated HTTP status code
+                  message:
+                    type: string
+                    example: Bad Request
+                    description: Deprecated human readable error message
+                  error:
+                    type: string
+                    example: Bad Request
+                    description: Deprecated machine readable error message
+                  incident:
+                    description: Unique incident identifier
+                    type: string
+                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
                 type: string
-                example: 'foo.com'
+                example: foo.com
         '404':
           description: Not Found
           content:
             application/json:
               schema:
-                additionalProperties: false
-                properties:
-                  error:
-                    example: Not Found
-                    type: string
-                  incident:
-                    description: Unique incident identifier
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                    type: string
-                  message:
-                    example: Can not get entity /tasks/123
-                    type: string
-                  statusCode:
-                    example: 404
-                    type: integer
+                type: object
                 required:
                 - statusCode
                 - message
-                type: object
+                additionalProperties: false
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                    description: Deprecated HTTP status code
+                  message:
+                    type: string
+                    example: Can not get entity /tasks/123
+                    description: Deprecated human readable error message
+                  error:
+                    type: string
+                    example: Not Found
+                    description: Deprecated machine readable error message
+                  incident:
+                    description: Unique incident identifier
+                    type: string
+                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
                 type: string
-                example: 'foo.com'
+                example: foo.com
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                additionalProperties: false
-                properties:
-                  error:
-                    example: Internal Server Error
-                    type: string
-                  incident:
-                    description: Unique incident identifier
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                    type: string
-                  message:
-                    example: Internal Server Error
-                    type: string
-                  statusCode:
-                    example: 500
-                    type: integer
+                type: object
                 required:
                 - statusCode
                 - message
-                type: object
-
+                additionalProperties: false
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 500
+                    description: Deprecated HTTP status code
+                  message:
+                    type: string
+                    example: Internal Server Error
+                    description: Deprecated human readable error message
+                  error:
+                    type: string
+                    example: Internal Server Error
+                    description: Deprecated machine readable error message
+                  incident:
+                    description: Unique incident identifier
+                    type: string
+                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
+                  status:
+                    type: integer
+                    example: 400
+                    description: HTTP status code
+                  name:
+                    type: string
+                    example: Bad Request
+                    description: HTTP status name
+                  path:
+                    type: string
+                    example: /pm/v1/foobar
+                    description: Path of where the error occurred
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Invalid value
+                          description: Human readable error message
+                        errorCode:
+                          type: string
+                          example: SomeCustomError
+                          description: Machine readable error code of what happened
+                        path:
+                          type: string
+                          example: /pm/v1/foobar
+                          description: Path of where the error occurred
           headers:
             Access-Control-Allow-Origin:
               schema:
                 type: string
-                example: 'foo.com'
+                example: foo.com
       x-amazon-apigateway-request-validator: all
       parameters:
       - name: host
@@ -162,8 +257,8 @@ paths:
         required: false
         schema:
           type: string
-      - in: header
-        name: x-datadog-sampling-priority
+      - name: x-datadog-sampling-priority
+        in: header
         required: false
         schema:
           type: string
@@ -213,7 +308,7 @@ paths:
             Access-Control-Allow-Origin:
               schema:
                 type: string
-                example: 'foo.com'
+                example: foo.com
             Access-Control-Allow-Methods:
               schema:
                 type: string
@@ -242,18 +337,18 @@ paths:
         '200':
           description: Static file api.v1.yml
           headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-                example: 'foo.com'
-            Access-Control-Expose-Headers:
-              schema:
-                example: Content-Type
-                type: string
             Content-Type:
               schema:
                 example: text/yaml
                 type: string
+            Access-Control-Expose-Headers:
+              schema:
+                type: string
+                example: Content-Type
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                example: foo.com
       parameters:
       - name: host
         in: header
@@ -300,9 +395,9 @@ paths:
           '200':
             statusCode: '200'
             responseParameters:
+              method.response.header.Content-Type: integration.response.header.Content-Type
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
               method.response.header.Access-Control-Expose-Headers: '''Content-Type'''
-              method.response.header.Content-Type: integration.response.header.Content-Type
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -325,7 +420,7 @@ paths:
             Access-Control-Allow-Origin:
               schema:
                 type: string
-                example: 'foo.com'
+                example: foo.com
             Access-Control-Allow-Methods:
               schema:
                 type: string
@@ -339,8 +434,8 @@ paths:
           default:
             statusCode: '200'
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''authorization,host,x-datadog-origin,x-datadog-parent-id,x-datadog-sampling-priority,x-datadog-trace-id'''
               method.response.header.Access-Control-Allow-Methods: '''GET,OPTIONS'''
+              method.response.header.Access-Control-Allow-Headers: '''authorization,host,x-datadog-origin,x-datadog-parent-id,x-datadog-sampling-priority,x-datadog-trace-id'''
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
         requestTemplates:
           application/json: '{"statusCode": 200}'
@@ -348,89 +443,86 @@ paths:
         type: mock
 components:
   schemas:
+    MessageList:
+      type: array
+      items:
+        type: object
+        additionalProperties: true
     UserCreated:
       type: object
-      additionalProperties: false
       properties:
         recipients:
           type: array
           minItems: 1
           example:
-            - urn:pm:users:pm.demo:user/1234-123456-123456-1234
-            - urn:pm:users:pm.demo:role/customer
+          - urn:pm:users:pm.demo:user/1234-123456-123456-1234
+          - urn:pm:users:pm.demo:role/customer
           items:
-            example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
-            pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
             type: string
-
+            pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
+            example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         subject:
           type: string
         message:
           type: string
           enum:
-            - UserCreated
-            - ProjectCreated
+          - UserCreated
+          - ProjectCreated
         parameters:
           type: object
-          additionalProperties: false
           properties:
             name:
               type: string
             email:
               type: string
+          additionalProperties: false
           required:
-            - name
-            - email
+          - name
+          - email
+      additionalProperties: false
       required:
-       - recipients
-       - subject
-       - message
-       - parameters
-
-    MessageList:
-      items:
-        additionalProperties: true
-        type: object
-      type: array
+      - recipients
+      - subject
+      - message
+      - parameters
     ProjectCreated:
       type: object
-      additionalProperties: false
       properties:
         recipients:
           type: array
           minItems: 1
           example:
-            - urn:pm:users:pm.demo:user/1234-123456-123456-1234
-            - urn:pm:users:pm.demo:role/customer
+          - urn:pm:users:pm.demo:user/1234-123456-123456-1234
+          - urn:pm:users:pm.demo:role/customer
           items:
-            example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
-            pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+$
             type: string
-
+            pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
+            example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         subject:
           type: string
         message:
           type: string
           enum:
-            - UserCreated
-            - ProjectCreated
+          - UserCreated
+          - ProjectCreated
         parameters:
           type: object
-          additionalProperties: false
           properties:
             label:
               type: string
             start:
               type: string
               format: datetime
+          additionalProperties: false
           required:
           - label
           - start
+      additionalProperties: false
       required:
-       - recipients
-       - subject
-       - message
-       - parameters
+      - recipients
+      - subject
+      - message
+      - parameters
 x-amazon-apigateway-request-validators:
   all:
     validateRequestParameters: true

@@ -22,15 +22,17 @@ dependencies = [
 ]
 
 setup(
-    name='api-deploy',
+    name='packmatic-api-deploy',
     version=VERSION,
-    url='https://github.com/fabfuel/api-deploy',
-    download_url='https://github.com/fabfuel/api-deploy/archive/%s.tar.gz' % VERSION,
+    url='https://github.com/Packmatic/api-deploy',
     license='BSD-3-Clause',
     author='Fabian Fuelling',
     author_email='pypi@fabfuel.de',
-    description='Manage Amazon REST API Gateway deployments',
+    maintainer='Packmatic Tech',
+    maintainer_email='tech@packmatic.io',
+    description='Manage Amazon REST API Gateway deployments (Packmatic fork of api-deploy)',
     long_description=readme(),
+    long_description_content_type='text/markdown',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     zip_safe=False,

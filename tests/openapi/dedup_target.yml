@@ -30,40 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: false
-                properties:
-                  application:
-                    type: object
-                    additionalProperties: false
-                    properties:
-                      name:
-                        type: string
-                        description: Name of the application
-                      environment:
-                        type: string
-                        description: Name of the environment the app is running in
-                      version:
-                        type: string
-                        description: Current release version
-                  instance:
-                    type: object
-                    additionalProperties: false
-                    properties:
-                      datetime:
-                        type: string
-                        format: date-time
-                        description: Current date and time of the server
-                      uptime:
-                        type: string
-                        description: Duration of how long the app is running
-                      startup:
-                        type: string
-                        format: date-time
-                        description: Date and time when the application started
-                      hostname:
-                        type: string
-                        description: Hostname of the application host or container
+                $ref: '#/components/schemas/Response200Health'
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -74,57 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                - statusCode
-                - message
-                additionalProperties: false
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 401
-                    description: Deprecated HTTP status code
-                  message:
-                    type: string
-                    example: Unauthorized
-                    description: Deprecated human readable error message
-                  error:
-                    type: string
-                    example: Unauthorized
-                    description: Deprecated machine readable error message
-                  incident:
-                    description: Unique incident identifier
-                    type: string
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                  status:
-                    type: integer
-                    example: 400
-                    description: HTTP status code
-                  name:
-                    type: string
-                    example: Bad Request
-                    description: HTTP status name
-                  path:
-                    type: string
-                    example: /pm/v1/foobar
-                    description: Path of where the error occurred
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: Invalid value
-                          description: Human readable error message
-                        errorCode:
-                          type: string
-                          example: SomeCustomError
-                          description: Machine readable error code of what happened
-                        path:
-                          type: string
-                          example: /pm/v1/foobar
-                          description: Path of where the error occurred
+                $ref: '#/components/schemas/Response401Unauthorized'
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -135,57 +52,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                - statusCode
-                - message
-                additionalProperties: false
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 403
-                    description: Deprecated HTTP status code
-                  message:
-                    type: string
-                    example: Forbidden resource
-                    description: Deprecated human readable error message
-                  error:
-                    type: string
-                    example: Forbidden
-                    description: Deprecated machine readable error message
-                  incident:
-                    description: Unique incident identifier
-                    type: string
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                  status:
-                    type: integer
-                    example: 400
-                    description: HTTP status code
-                  name:
-                    type: string
-                    example: Bad Request
-                    description: HTTP status name
-                  path:
-                    type: string
-                    example: /pm/v1/foobar
-                    description: Path of where the error occurred
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: Invalid value
-                          description: Human readable error message
-                        errorCode:
-                          type: string
-                          example: SomeCustomError
-                          description: Machine readable error code of what happened
-                        path:
-                          type: string
-                          example: /pm/v1/foobar
-                          description: Path of where the error occurred
+                $ref: '#/components/schemas/Response403Forbidden'
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -196,57 +63,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                - statusCode
-                - message
-                additionalProperties: false
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 500
-                    description: Deprecated HTTP status code
-                  message:
-                    type: string
-                    example: Internal Server Error
-                    description: Deprecated human readable error message
-                  error:
-                    type: string
-                    example: Internal Server Error
-                    description: Deprecated machine readable error message
-                  incident:
-                    description: Unique incident identifier
-                    type: string
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                  status:
-                    type: integer
-                    example: 400
-                    description: HTTP status code
-                  name:
-                    type: string
-                    example: Bad Request
-                    description: HTTP status name
-                  path:
-                    type: string
-                    example: /pm/v1/foobar
-                    description: Path of where the error occurred
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: Invalid value
-                          description: Human readable error message
-                        errorCode:
-                          type: string
-                          example: SomeCustomError
-                          description: Machine readable error code of what happened
-                        path:
-                          type: string
-                          example: /pm/v1/foobar
-                          description: Path of where the error occurred
+                $ref: '#/components/schemas/Response500ServerError'
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -370,57 +187,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                - statusCode
-                - message
-                additionalProperties: false
-                properties:
-                  statusCode:
-                    type: integer
-                    example: 500
-                    description: Deprecated HTTP status code
-                  message:
-                    type: string
-                    example: Internal Server Error
-                    description: Deprecated human readable error message
-                  error:
-                    type: string
-                    example: Internal Server Error
-                    description: Deprecated machine readable error message
-                  incident:
-                    description: Unique incident identifier
-                    type: string
-                    example: 5beb965c-7ffc-468b-a063-eb47c5b366c2
-                  status:
-                    type: integer
-                    example: 400
-                    description: HTTP status code
-                  name:
-                    type: string
-                    example: Bad Request
-                    description: HTTP status name
-                  path:
-                    type: string
-                    example: /pm/v1/foobar
-                    description: Path of where the error occurred
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: Invalid value
-                          description: Human readable error message
-                        errorCode:
-                          type: string
-                          example: SomeCustomError
-                          description: Machine readable error code of what happened
-                        path:
-                          type: string
-                          example: /pm/v1/foobar
-                          description: Path of where the error occurred
+                $ref: '#/components/schemas/Response500ServerError'
           headers:
             Access-Control-Allow-Origin:
               schema:
@@ -742,7 +509,6 @@ paths:
           headers:
             Content-Type:
               schema:
-                example: text/yaml
                 type: string
             Access-Control-Expose-Headers:
               schema:
@@ -862,20 +628,16 @@ components:
         id:
           type: string
           readOnly: true
-          example: 5d4470a6-121b-40d2-aff9-00f24aa4a110
         urn:
           type: string
           pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
-          example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         tenant:
           type: string
           pattern: ^[a-z]{2,}(?:\.[a-z]{1}[a-z-]*[a-z]{1})*$
-          example: pm.foobar
           readOnly: true
         packmaticId:
           type: string
           pattern: ^[A-Z]{2}-[A-Z0-9]{5,7}$
-          example: PJ-123ABC
           readOnly: true
         createdAt:
           type: string
@@ -883,7 +645,6 @@ components:
         createdBy:
           type: string
           pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
-          example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         modifiedAt:
           type: string
           format: date-time
@@ -891,7 +652,6 @@ components:
         modifiedBy:
           type: string
           pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
-          example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
           nullable: true
         additionalField:
           type: string
@@ -911,20 +671,16 @@ components:
         id:
           type: string
           readOnly: true
-          example: 5d4470a6-121b-40d2-aff9-00f24aa4a110
         urn:
           type: string
           pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
-          example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         tenant:
           type: string
           pattern: ^[a-z]{2,}(?:\.[a-z]{1}[a-z-]*[a-z]{1})*$
-          example: pm.foobar
           readOnly: true
         packmaticId:
           type: string
           pattern: ^[A-Z]{2}-[A-Z0-9]{5,7}$
-          example: PJ-123ABC
           readOnly: true
         createdAt:
           type: string
@@ -932,7 +688,6 @@ components:
         createdBy:
           type: string
           pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
-          example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
         modifiedAt:
           type: string
           format: date-time
@@ -940,8 +695,158 @@ components:
         modifiedBy:
           type: string
           pattern: ^urn:[\w-]+:[\w.-]*:[\w.-]*:[\w-]+\/[^\/]+(\/[^\/]+)*$
-          example: urn:pm:service::foobar/d9a6fc2e-a4b3-4fba-9f20-c5bd2fdb5071
           nullable: true
+    Response200Health:
+      type: object
+      additionalProperties: false
+      properties:
+        application:
+          type: object
+          additionalProperties: false
+          properties:
+            name:
+              type: string
+            environment:
+              type: string
+            version:
+              type: string
+          required:
+          - name
+          - environment
+          - version
+        instance:
+          type: object
+          additionalProperties: false
+          properties:
+            datetime:
+              type: string
+              format: date-time
+            uptime:
+              type: string
+            startup:
+              type: string
+              format: date-time
+            hostname:
+              type: string
+          required:
+          - datetime
+          - uptime
+          - startup
+          - hostname
+      required:
+      - application
+      - instance
+    Response401Unauthorized:
+      type: object
+      required:
+      - statusCode
+      - message
+      additionalProperties: false
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        error:
+          type: string
+        incident:
+          type: string
+        status:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              errorCode:
+                type: string
+              path:
+                type: string
+            additionalProperties: false
+            required:
+            - message
+            - errorCode
+            - path
+    Response403Forbidden:
+      type: object
+      required:
+      - statusCode
+      - message
+      additionalProperties: false
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        error:
+          type: string
+        incident:
+          type: string
+        status:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              errorCode:
+                type: string
+              path:
+                type: string
+            additionalProperties: false
+            required:
+            - message
+            - errorCode
+            - path
+    Response500ServerError:
+      type: object
+      required:
+      - statusCode
+      - message
+      additionalProperties: false
+      properties:
+        statusCode:
+          type: integer
+        message:
+          type: string
+        error:
+          type: string
+        incident:
+          type: string
+        status:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+              errorCode:
+                type: string
+              path:
+                type: string
+            additionalProperties: false
+            required:
+            - message
+            - errorCode
+            - path
   securitySchemes:
     supplierAuth:
       type: apiKey
