@@ -29,7 +29,7 @@ setup(
     author='Fabian Fuelling',
     author_email='pypi@fabfuel.de',
     maintainer='Packmatic Tech',
-    maintainer_email='jonas.cwojdzinski@packmatic.io',
+    maintainer_email='tech@packmatic.io',
     description='Manage Amazon REST API Gateway deployments (Packmatic fork of api-deploy)',
     long_description=readme(),
     long_description_content_type='text/markdown',
