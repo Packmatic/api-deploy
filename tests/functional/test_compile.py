@@ -9,6 +9,8 @@ dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'api.yml')
 config = Config.from_file(filename)
 
+dedup_config = Config.from_file(os.path.join(dirname, 'api.dedup.yml'))
+
 
 @fixture
 def simple_source_file():
@@ -53,6 +55,12 @@ def external_ref_target_file():
 
 
 @fixture
+def dedup_target_file():
+    filename = os.path.join(dirname, '../openapi/dedup_target.yml')
+    return Schema.from_file(filename)
+
+
+@fixture
 def one_of_source_file():
     filename = os.path.join(dirname, '../openapi/one_of_source.yml')
     return Schema.from_file(filename)
@@ -85,6 +93,12 @@ def test_compile_external_ref(external_ref_source_file, external_ref_target_file
     manager = ProcessManager.default(config)
     processed = manager.process(external_ref_source_file)
     assert processed.dump(True) == external_ref_target_file.dump(True)
+
+
+def test_compile_dedup_external_refs(external_ref_source_file, dedup_target_file):
+    manager = ProcessManager.default(dedup_config)
+    processed = manager.process(external_ref_source_file)
+    assert processed.dump(True) == dedup_target_file.dump(True)
 
 
 def test_compile_one_of(one_of_source_file, one_of_target_file):

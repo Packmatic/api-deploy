@@ -1,0 +1,28 @@
+gateway:
+  integrationHost: https://integration.com
+  connectionId: 1234567890
+  removeScopes: true
+  removeDescriptions: true
+  removeExamples: true
+flatten:
+  dedupExternalRefs: true
+headers:
+  request:
+    - host
+    - authorization
+    - x-datadog-trace-id
+    - x-datadog-parent-id
+    - x-datadog-origin
+    - x-datadog-sampling-priority
+  response:
+    - Location
+cors:
+  origin: 'foo.com'
+static:
+  files:
+    - api.v1.yml
+strict:
+  enabled: true
+  overwriteRequired: false
+  blocklist:
+    - _links
