@@ -17,8 +17,8 @@ dependencies = [
     'boto3>=1.26.118',
     'PyYAML>=6.0',
     'requests>=2.31.0',
-    'Jinja2==3.1.2',
-    'urllib3<2',
+    'Jinja2==3.1.6',
+    'urllib3>=2.5.0, <3',
 ]
 
 setup(
