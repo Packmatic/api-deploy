@@ -252,6 +252,12 @@ paths:
               schema:
                 example: x-ping
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
             x-ping:
               schema:
                 type: string
@@ -266,6 +272,12 @@ paths:
               schema:
                 example: foo.com
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '404':
           content:
             application/json:
@@ -277,6 +289,12 @@ paths:
               schema:
                 example: foo.com
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           content:
             application/json:
@@ -287,6 +305,12 @@ paths:
             Access-Control-Allow-Origin:
               schema:
                 example: foo.com
+                type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
                 type: string
       tags:
       - Health
@@ -310,19 +334,31 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
               method.response.header.Access-Control-Expose-Headers: '''x-ping'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
               method.response.header.x-ping: integration.response.header.x-ping
             statusCode: '200'
           '400':
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '400'
           '404':
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '404'
           default:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '500'
         type: http
         uri: https://integration.com/-/ping
@@ -415,6 +451,12 @@ paths:
               schema:
                 example: x-ping
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
             x-ping:
               schema:
                 type: string
@@ -429,6 +471,12 @@ paths:
               schema:
                 example: foo.com
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '404':
           content:
             application/json:
@@ -440,6 +488,12 @@ paths:
               schema:
                 example: foo.com
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           content:
             application/json:
@@ -450,6 +504,12 @@ paths:
             Access-Control-Allow-Origin:
               schema:
                 example: foo.com
+                type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
                 type: string
       tags:
       - Health
@@ -473,19 +533,31 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
               method.response.header.Access-Control-Expose-Headers: '''x-ping'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
               method.response.header.x-ping: integration.response.header.x-ping
             statusCode: '200'
           '400':
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '400'
           '404':
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '404'
           default:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '500'
         type: http
         uri: https://integration.com/-/ping
@@ -546,6 +618,12 @@ paths:
               schema:
                 example: x-ping
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
             x-ping:
               schema:
                 type: string
@@ -560,6 +638,12 @@ paths:
               schema:
                 example: foo.com
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '404':
           content:
             application/json:
@@ -571,6 +655,12 @@ paths:
               schema:
                 example: foo.com
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           content:
             application/json:
@@ -581,6 +671,12 @@ paths:
             Access-Control-Allow-Origin:
               schema:
                 example: foo.com
+                type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
                 type: string
       tags:
       - Health
@@ -604,19 +700,31 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
               method.response.header.Access-Control-Expose-Headers: '''x-ping'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
               method.response.header.x-ping: integration.response.header.x-ping
             statusCode: '200'
           '400':
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '400'
           '404':
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '404'
           default:
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '500'
         type: http
         uri: https://integration.com/-/ping
@@ -670,6 +778,12 @@ paths:
               schema:
                 example: text/yaml
                 type: string
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       tags:
       - Static Files
       x-amazon-apigateway-integration:
@@ -693,6 +807,9 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
               method.response.header.Access-Control-Expose-Headers: '''Content-Type'''
               method.response.header.Content-Type: integration.response.header.Content-Type
+              method.response.header.Strict-Transport-Security: '''max-age=31536000;
+                includeSubDomains'''
+              method.response.header.X-Content-Type-Options: '''nosniff'''
             statusCode: '200'
           default:
             responseParameters:

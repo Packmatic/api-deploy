@@ -8,6 +8,7 @@ from requests import get, HTTPError
 from api_deploy.config import Config
 from api_deploy.processors.abstract_processor import AbstractProcessor
 from api_deploy.processors.code_generator import CodeGenerator
+from api_deploy.processors.security_headers_processor import SecurityHeadersProcessor
 from api_deploy.processors.strict_processor import StrictProcessor
 from api_deploy.schema import Schema, YamlDict
 
@@ -27,6 +28,7 @@ class ProcessManager:
         default_manager.register(ApiGatewayProcessor(config, **config['gateway']))
         default_manager.register(CorsProcessor(config, headers=config['headers'], **config['cors']))
         default_manager.register(CodeGenerator(config, **config['generator']))
+        default_manager.register(SecurityHeadersProcessor(config))
         return default_manager
 
     def register(self, processor: AbstractProcessor):

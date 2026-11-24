@@ -34,6 +34,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           description: Internal Server Error
           content:
@@ -61,6 +67,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       parameters:
       - name: host
         in: header
@@ -104,10 +116,14 @@ paths:
             statusCode: '500'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '200':
             statusCode: '200'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -171,6 +187,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           description: Internal Server Error
           content:
@@ -198,6 +220,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       parameters:
       - name: host
         in: header
@@ -241,10 +269,14 @@ paths:
             statusCode: '500'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '200':
             statusCode: '200'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -364,6 +396,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -390,6 +428,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '404':
           description: Not Found
           content:
@@ -419,6 +463,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           description: Internal Server Error
           content:
@@ -446,6 +496,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       x-amazon-apigateway-integration:
         type: http
         connectionId: 1234567890
@@ -458,18 +514,26 @@ paths:
             statusCode: '500'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '200':
             statusCode: '200'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '400':
             statusCode: '400'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '404':
             statusCode: '404'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -592,6 +656,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -618,6 +688,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '404':
           description: Not Found
           content:
@@ -647,6 +723,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           description: Internal Server Error
           content:
@@ -674,6 +756,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       x-amazon-apigateway-integration:
         type: http
         connectionId: 1234567890
@@ -686,18 +774,26 @@ paths:
             statusCode: '500'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '200':
             statusCode: '200'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '400':
             statusCode: '400'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '404':
             statusCode: '404'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -818,6 +914,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '400':
           description: Bad Request
           content:
@@ -844,6 +946,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '404':
           description: Not Found
           content:
@@ -873,6 +981,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
         '500':
           description: Internal Server Error
           content:
@@ -900,6 +1014,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       x-amazon-apigateway-integration:
         type: http
         connectionId: 1234567890
@@ -912,18 +1032,26 @@ paths:
             statusCode: '500'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '200':
             statusCode: '200'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '400':
             statusCode: '400'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
           '404':
             statusCode: '404'
             responseParameters:
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -1004,6 +1132,12 @@ paths:
               schema:
                 type: string
                 example: foo.com
+            Strict-Transport-Security:
+              schema:
+                type: string
+            X-Content-Type-Options:
+              schema:
+                type: string
       parameters:
       - name: host
         in: header
@@ -1053,6 +1187,8 @@ paths:
               method.response.header.Content-Type: integration.response.header.Content-Type
               method.response.header.Access-Control-Allow-Origin: '''foo.com'''
               method.response.header.Access-Control-Expose-Headers: '''Content-Type'''
+              method.response.header.Strict-Transport-Security: "'max-age=31536000; includeSubDomains'"
+              method.response.header.X-Content-Type-Options: "'nosniff'"
         requestParameters:
           integration.request.header.User-Agent: context.identity.userAgent
           integration.request.header.X-Forwarded-For: context.identity.sourceIp
@@ -1523,8 +1659,7 @@ components:
                                   comment:
                                     type: string
                                     nullable: true
-                                    example: Additional user generated info about
-                                      the transition
+                                    example: Additional user generated info about the transition
                             _meta:
                               type: object
                               readOnly: true
